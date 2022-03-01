@@ -3,6 +3,7 @@ getprop = $(shell cat module/module.prop | grep "^$(1)=" | head -n1 | cut -d'=' 
 MODNAME ?= $(call getprop,id)
 MODVER ?= $(call getprop,version)
 ZIP = $(MODNAME)-$(MODVER).zip
+ZIP_LATEST = $(MODNAME)-latest.zip
 
 all: $(ZIP)
 
@@ -10,6 +11,7 @@ zip: $(ZIP)
 
 %.zip: clean
 	cd module && zip -r9 ../$(ZIP) .
+	cp $(ZIP) $(ZIP_LATEST)
 
 install: $(ZIP)
 	adb push $(ZIP) /sdcard/
