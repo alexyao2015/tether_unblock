@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create ZIP
+        run: |
+          make zip
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: tether_unblock-${{ github.run_number }}
+          path: tether_unblock-*.zip
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          files: tether_unblock-*.zip
+          draft: true

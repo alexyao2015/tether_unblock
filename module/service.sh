@@ -1,3 +1,4 @@
+#!/system/bin/sh
 
 set_ttl_63()
 {

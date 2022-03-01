@@ -1,4 +1,4 @@
-getprop = $(shell cat module.prop | grep "^$(1)=" | head -n1 | cut -d'=' -f2)
+getprop = $(shell cat module/module.prop | grep "^$(1)=" | head -n1 | cut -d'=' -f2)
 
 MODNAME ?= $(call getprop,id)
 MODVER ?= $(call getprop,version)
@@ -9,7 +9,7 @@ all: $(ZIP)
 zip: $(ZIP)
 
 %.zip: clean
-	zip -r9 $(ZIP) . -x $(MODNAME)-*.zip LICENSE .gitignore .gitattributes Makefile /.git*
+	cd module && zip -r9 ../$(ZIP) .
 
 install: $(ZIP)
 	adb push $(ZIP) /sdcard/
@@ -20,6 +20,6 @@ clean:
 	rm -f *.zip
 
 update:
-	curl https://raw.githubusercontent.com/topjohnwu/Magisk/master/scripts/module_installer.sh > META-INF/com/google/android/update-binary
+	curl https://raw.githubusercontent.com/topjohnwu/Magisk/master/scripts/module_installer.sh > module/META-INF/com/google/android/update-binary
 
 .PHONY: all zip %.zip install clean update

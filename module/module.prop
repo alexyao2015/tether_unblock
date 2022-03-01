@@ -1,0 +1,7 @@
+id=tether_unblock
+name=Tether Unblock
+version=v1.0.0
+versionCode=100
+author=alexyao2015
+description=Allows to bypass tethering blocking by mobile operators.
+updateJson=https://raw.githubusercontent.com/alexyao2015/tether_unblock/master/update.json
