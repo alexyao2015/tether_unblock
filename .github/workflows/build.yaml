@@ -55,7 +55,6 @@ jobs:
 
       # https://github.com/crazy-max/ghaction-docker-buildx/issues/172
       - name: Increase swap
-        if: ${{ matrix.arch_friendly == 'armv6' || matrix.arch_friendly == 'armv7' }}
         run: |
           set -x
           df -h
