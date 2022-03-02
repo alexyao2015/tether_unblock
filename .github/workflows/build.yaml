@@ -53,6 +53,11 @@ jobs:
           restore-keys: |
             ${{ github.ref }}-
 
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@master
+        with:
+          swap-size-gb: 10
+
       - name: Build Kernel
         run: |
           set -x
