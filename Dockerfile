@@ -31,9 +31,9 @@ RUN set -x \
 #                       CLANG_TRIPLE=aarch64-linux-gnu- \
 #                       CROSS_COMPILE=aarch64-linux-android- \
 #                       CROSS_COMPILE_ARM32=arm-linux-androideabi-
-# RUN set -x \
-#     && echo "CONFIG_NETFILTER_XT_TARGET_HL=m" >> build/build.config \
-#     && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config
+RUN set -x \
+    && echo "CONFIG_NETFILTER_XT_TARGET_HL=m" >> build/build.config \
+    && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config
 
-# RUN set -x \
-#     && build/build.sh
+RUN set -x \
+    && build/build.sh
