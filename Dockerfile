@@ -16,7 +16,7 @@ RUN set -x \
     && chmod a+rx /bin/repo
 
 RUN set -x \
-    && "" | repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-crosshatch-4.9-android12 \
+    && repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-crosshatch-4.9-android12 \
     && repo sync
 
 # RUN set -x \
