@@ -5,6 +5,7 @@ WORKDIR /kernel
 RUN set -x \
     && apt update \
     && apt install -y \
+        bc \
         build-essential \
         curl \
         git \
