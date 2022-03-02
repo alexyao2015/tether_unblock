@@ -7,6 +7,7 @@ RUN set -x \
     && apt install -y \
         bc \
         build-essential \
+        cpio \
         curl \
         git \
         gpg \
