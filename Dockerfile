@@ -19,7 +19,7 @@ RUN set -x \
     && chmod a+rx /bin/repo
 
 RUN set -x \
-    && "" | repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-crosshatch-4.9-android12 \
+    && echo "" | repo init -u https://android.googlesource.com/kernel/manifest -b android-msm-crosshatch-4.9-android12 \
     && repo sync
 
 # apt install -y clang
@@ -36,4 +36,4 @@ RUN set -x \
     && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config
 
 RUN set -x \
-    && build/build.sh
+    && build/build.sh -j2 V=1
