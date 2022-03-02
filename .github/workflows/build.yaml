@@ -4,8 +4,8 @@ on:
   push:
 
 jobs:
-  build:
-    name: Build
+  module:
+    name: Build Module
     runs-on: ubuntu-latest
 
     steps:
@@ -27,3 +27,63 @@ jobs:
         with:
           files: tether_unblock-latest.zip
           draft: true
+
+  kernel:
+    name: Build Kernel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        with:
+          driver-opts: |
+            env.BUILDKIT_STEP_LOG_MAX_SIZE=10000000
+            env.BUILDKIT_STEP_LOG_MAX_SPEED=100000000
+          install: true
+
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        continue-on-error: true
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ github.ref }}-${{ github.sha }}
+          restore-keys: |
+            ${{ github.ref }}-
+
+      - name: Build Kernel
+        run: |
+          set -x
+          docker build \
+            --tag ci:${{ github.run_number }} \
+            --progress plain \
+            --file ./Dockerfile \
+            --cache-from type=local,src=/tmp/.buildx-cache \
+            --cache-to type=local,dest=/tmp/.buildx-cache-new \
+            --load \
+            .
+
+      # Temp fix
+      # https://github.com/docker/build-push-action/issues/252
+      # https://github.com/moby/buildkit/issues/1896
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+      - name: Inspect
+        run: |
+          set -x
+          docker image inspect ci:${{ github.run_number }}
+      - name: Save tarball
+        run: |
+          set -x
+          docker save ci:${{ github.run_number }} | gzip > ci-${{ github.run_number }}.tar.gz
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ci-${{ github.run_number }}
+          path: ci-${{ github.run_number }}.tar.gz
