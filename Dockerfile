@@ -26,8 +26,7 @@ RUN set -x \
 
 RUN set -x \
     && echo "CONFIG_NETFILTER_XT_TARGET_HL=m" >> build/build.config \
-    && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config \
-    && echo 'EXT_MODULES="${EXT_MODULES} wireguard"' >> build/build.config
+    && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config
 
-RUN set -x \
-    && build/build.sh -j2 V=1
+# RUN set -x \
+#     && build/build.sh -j2 V=1 EXT_MODULES="wireguard"
