@@ -36,14 +36,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-        with:
-          driver-opts: |
-            env.BUILDKIT_STEP_LOG_MAX_SIZE=10000000
-            env.BUILDKIT_STEP_LOG_MAX_SPEED=100000000
-          install: true
-
       - name: Cache Docker layers
         uses: actions/cache@v2
         continue-on-error: true
@@ -69,11 +61,7 @@ jobs:
           set -x
           docker build \
             --tag ci:${{ github.run_number }} \
-            --progress plain \
             --file ./Dockerfile \
-            --cache-from type=local,src=/tmp/.buildx-cache \
-            --cache-to type=local,dest=/tmp/.buildx-cache-new \
-            --load \
             .
 
       - name: Check dmesg
@@ -82,15 +70,6 @@ jobs:
           sudo dmesg
           docker ps -a
           docker images
-
-      # Temp fix
-      # https://github.com/docker/build-push-action/issues/252
-      # https://github.com/moby/buildkit/issues/1896
-      - name: Move cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-
       - name: Inspect
         run: |
           set -x
