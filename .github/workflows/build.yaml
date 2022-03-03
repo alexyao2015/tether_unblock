@@ -59,6 +59,7 @@ jobs:
           swap-size-gb: 6
 
       - name: Build Kernel
+        continue-on-error: true
         run: |
           set -x
           docker build \
