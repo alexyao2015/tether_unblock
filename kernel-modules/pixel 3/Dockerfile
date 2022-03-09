@@ -25,8 +25,11 @@ RUN set -x \
     && repo sync
 
 RUN set -x \
-    && echo "CONFIG_NETFILTER_XT_TARGET_HL=m" >> build/build.config \
-    && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config
+    && echo "CONFIG_NETFILTER_XT_TARGET_HL=m" >> build/build.config
+    # && echo "CONFIG_NETFILTER_XT_TARGET_HMARK=m" >> build/build.config \
+    # && echo "CONFIG_NET_ACT_PEDIT=m" >> build/build.config
+    # pedit is used for tc
 
 # RUN set -x \
 #     && build/build.sh -j2 V=1 EXT_MODULES="wireguard"
+CMD ["/bin/bash", "-c", "build/build.sh"]

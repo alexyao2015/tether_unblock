@@ -1,0 +1,6 @@
+id=tether_kernel
+name=Tether Kernel Module
+version=v1.0.0
+versionCode=100
+author=alexyao2015
+description=Allows to bypass tethering blocking by mobile operators (kernel).

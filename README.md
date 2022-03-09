@@ -19,3 +19,17 @@ Master branch:
 ## Support
 
 - [Telegram](https://t.me/joinchat/GsJfBBaxozXvVkSJhm0IOQ)
+
+
+# TODO
+
+Figure out how to operate tc with pedit to modify outbound ttl
+
+
+netsh int ipv4 set global defaultcurhoplimit=65
+netsh int ipv6 set global defaultcurhoplimit=65
+
+iptables -t mangle -A POSTROUTING -j TTL --ttl-set 64
+ip6tables -t mangle -A POSTROUTING -j HL --hl-set 64
+
+resetprop net.tethering.noprovisioning true
